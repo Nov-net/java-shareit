@@ -62,15 +62,15 @@ public class ItemRepositoryImpl implements ItemRepository {
             throw new NotFoundException("Вещь другого пользователя");
         }
 
-        if(itemDto.getName() != null) {
+        if (itemDto.getName() != null) {
             item.setName(itemDto.getName());
         }
 
-        if(itemDto.getDescription() != null) {
+        if (itemDto.getDescription() != null) {
             item.setDescription(itemDto.getDescription());
         }
 
-        if(itemDto.getAvailable() != null) {
+        if (itemDto.getAvailable() != null) {
             item.setAvailable(itemDto.getAvailable());
         }
 

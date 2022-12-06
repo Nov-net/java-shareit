@@ -19,4 +19,5 @@ public class Booking {
     private Item item;
     private User booker;
     private Status status;
+
 }

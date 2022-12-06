@@ -32,4 +32,5 @@ public class ErrorHandler {
         return new ResponseEntity<>(Map.of("error:", e.getMessage()),
                 HttpStatus.NOT_FOUND);
     }
+
 }

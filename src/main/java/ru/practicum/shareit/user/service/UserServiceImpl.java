@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Primary
 @Slf4j
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository repository;
 
     /*GET /users - получение списка пользователей*/

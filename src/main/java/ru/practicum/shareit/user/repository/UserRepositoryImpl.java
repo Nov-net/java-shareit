@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Primary
 @Slf4j
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
     private static final List<User> users = new ArrayList<>();
     private long lastId = 0;
 
@@ -52,11 +52,11 @@ public class UserRepositoryImpl implements UserRepository{
         User user = findUserById(userId);
         users.remove(user);
 
-        if(userDto.getName() != null) {
+        if (userDto.getName() != null) {
             user.setName(userDto.getName());
         }
 
-        if(userDto.getEmail() != null && userDto.getEmail().contains("@")) {
+        if (userDto.getEmail() != null && userDto.getEmail().contains("@")) {
             user.setEmail(userDto.getEmail());
         }
 
@@ -74,7 +74,7 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public void deleteUserById(long userId) {
         User user = findUserById(userId);
-        if(user != null) {
+        if (user != null) {
             users.remove(user);
         }
     }
@@ -104,4 +104,5 @@ public class UserRepositoryImpl implements UserRepository{
                 .map(User::getEmail)
                 .collect(Collectors.toList());
     }
+
 }
