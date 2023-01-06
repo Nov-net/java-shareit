@@ -1,4 +1,4 @@
-package ru.practicum.shareit.request.dto;
+package ru.practicum.shareit.request.model;
 
 /**
  * TODO Sprint add-item-requests.
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class ItemRequestDto {
+public class ItemRequest {
     private Long id;
     private String description;
     private User requestor;
