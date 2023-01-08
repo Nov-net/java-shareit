@@ -126,7 +126,7 @@ public class BookingServiceImpl implements BookingService {
 
         ItemValidator.isValidOwner(user, booking.getItem());
 
-        if (approved) {
+        if (Boolean.TRUE.equals(approved)) {
             booking.setStatus(Status.APPROVED);
         } else {
             booking.setStatus(Status.REJECTED);

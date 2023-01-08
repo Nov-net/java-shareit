@@ -21,7 +21,5 @@ public class ItemRequest {
     @ManyToOne
     @JoinColumn(name = "requestor_id", nullable=false)
     private User requestor;
-    /*@Column
-    private LocalDateTime created;*/
 
 }

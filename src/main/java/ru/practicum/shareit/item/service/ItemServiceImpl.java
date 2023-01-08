@@ -170,7 +170,7 @@ public class ItemServiceImpl implements ItemService {
                 .filter(i -> i.getItem().getId().equals(itemId))
                 .anyMatch(i -> i.getEnd().isBefore(LocalDateTime.now()));
 
-        if (!bookingsIsPresent) {
+        if (Boolean.FALSE.equals(bookingsIsPresent)) {
             log.info("Бронирования вещи с id {} пользователем с id {} не найдены", itemId, userId);
             throw new InvalidParameterException("Бронирования не найдены");
         } else {

@@ -78,7 +78,7 @@ public class ItemValidator {
             throw new InvalidParameterException("Комментарий не может быть пустым");
         }
 
-        if (text.matches("[a-z]+[а-я]+[0-9]")) {
+        if (text.matches("[a-z]+[а-я]+\\d")) {
             log.info("Недопустимые символы в поле text: {}", text);
             throw new InvalidParameterException("Недопустимые символы в тексте комментария");
         }
