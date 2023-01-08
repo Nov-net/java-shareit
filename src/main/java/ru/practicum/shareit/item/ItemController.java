@@ -3,18 +3,16 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
 
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/items")
-@Slf4j
 public class ItemController {
     private final ItemService itemService;
 
@@ -48,6 +46,14 @@ public class ItemController {
     @GetMapping("/search")
     public List<ItemDto> searchItems(@RequestParam String text) {
         return itemService.searchItems(text);
+    }
+
+    /*POST /items/{itemId}/comment - добавление комментария*/
+    @PostMapping("/{itemId}/comment")
+    public CommentDto addComment(@RequestHeader("X-Sharer-User-Id") long userId,
+                                 @PathVariable(required = false)  long itemId,
+                                 @RequestBody CommentDto text) {
+        return itemService.addComment(userId, itemId, text);
     }
 
 }
