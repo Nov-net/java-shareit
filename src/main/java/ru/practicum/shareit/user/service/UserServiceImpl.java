@@ -19,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
+    //UserValidator userValidator = new UserValidator();
 
     /*GET /users - получение списка пользователей*/
     @Override
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
         log.info("Получение пользователя по id {}", userId);
         Optional<User> userOptional = repository.findById(userId);
         User user = UserValidator.isValidUser(userOptional);
+        //User user = userValidator.isValidUser(userOptional);
 
         if (userDto.getName() != null) {
             user.setName(userDto.getName());
@@ -68,6 +70,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> userOptional = repository.findById(userId);
         User user = UserValidator.isValidUser(userOptional);
+        //User user = userValidator.isValidUser(userOptional);
 
         return UserMapper.toUserDto(user);
     }

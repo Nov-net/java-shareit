@@ -2,7 +2,9 @@ package ru.practicum.shareit.item;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemDtoForRequest;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.request.RequestMapper;
 import ru.practicum.shareit.user.UserMapper;
 
 import java.util.List;
@@ -17,12 +19,37 @@ public class ItemMapper {
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
+                .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
                 .build();
     }
 
     public static List<ItemDto> mapToItemDto(List<Item> items) {
+        if (items == null) {
+            return null;
+        }
+
         return items.stream()
                 .map(ItemMapper::toItemDto)
+                .collect(Collectors.toList());
+    }
+
+    public static ItemDtoForRequest toItemDtoForRequest (Item item) {
+        return ItemDtoForRequest.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .requestId(item.getRequest() != null ? item.getRequest().getId() : null)
+                .build();
+    }
+
+    public static List<ItemDtoForRequest> mapToItemDtoForRequest(List<Item> items) {
+        if (items == null) {
+            return null;
+        }
+
+        return items.stream()
+                .map(ItemMapper::toItemDtoForRequest)
                 .collect(Collectors.toList());
     }
 
@@ -32,7 +59,6 @@ public class ItemMapper {
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
-                .request(itemDto.getRequest() != null ? itemDto.getRequest() : null)
                 .build();
     }
 
@@ -43,7 +69,7 @@ public class ItemMapper {
                 .description(item.getDescription())
                 .available(item.getAvailable())
                 .owner(UserMapper.userBilder(item.getOwner()))
-                .request(null)
+                .request(item.getRequest() != null ? RequestMapper.requestBilder(item.getRequest()) : null)
                 .build();
     }
 

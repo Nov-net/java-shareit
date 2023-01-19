@@ -29,18 +29,22 @@ public class BookingController {
         return bookingService.getBookingDtoByBookingId(userId, bookingId);
     }
 
-    /*GET /bookings - получение списка всех бронирований по bookerId*/
+    /*GET /bookings?state={state} - получение списка всех бронирований по bookerId*/
     @GetMapping
     public List<BookingDto> getAllBookingDtoByBookerId(@RequestHeader("X-Sharer-User-Id") long userId,
-                              @RequestParam(value = "state", defaultValue = "ALL", required = false) String state) {
-        return bookingService.getAllBookingDtoByBookerId(userId, state);
+                                @RequestParam(value = "state", defaultValue = "ALL", required = false) String state,
+                                @RequestParam(value = "from", defaultValue = "0", required = false) Integer from,
+                                @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
+        return bookingService.getAllBookingDtoByBookerId(userId, state, from, size);
     }
 
     /*GET /bookings/{owner} - получение списка всех бронирований по ownerId*/
     @GetMapping("/owner")
     public List<BookingDto> getBookingDtoByOwnerId(@RequestHeader("X-Sharer-User-Id") long userId,
-                               @RequestParam(value = "state", defaultValue = "ALL", required = false) String state) {
-        return bookingService.getBookingDtoByOwnerId(userId, state);
+                                @RequestParam(value = "state", defaultValue = "ALL", required = false) String state,
+                                @RequestParam(value = "from", defaultValue = "0", required = false) Integer from,
+                                @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
+        return bookingService.getBookingDtoByOwnerId(userId, state, from, size);
     }
 
     /*PATCH /bookings/:bookingId?approved=true - подтверждение бронирования*/

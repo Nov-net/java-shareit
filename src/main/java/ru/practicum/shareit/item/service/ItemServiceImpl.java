@@ -3,6 +3,8 @@ package ru.practicum.shareit.item.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.BookingMapper;
 import ru.practicum.shareit.booking.dto.BookingDtoForItemDto;
@@ -17,6 +19,9 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.validator.ItemValidator;
+import ru.practicum.shareit.request.model.Request;
+import ru.practicum.shareit.request.repository.RequestRepository;
+import ru.practicum.shareit.request.validator.RequestValidator;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.validator.UserValidator;
@@ -36,15 +41,18 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository repository;
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
-
+    private final RequestRepository requestRepository;
     private final CommentRepository commentRepository;
 
     /*GET /items - получение списка всех вещей*/
     @Override
-    public List<ItemDto> getItemsDtoByUserId(long userId) {
+    public List<ItemDto> getItemsDtoByUserId(long userId, Integer from, Integer size) {
         log.info("Запрос на получение всех вещей пользователя с id {}", userId);
 
-        List<Item> listItem = repository.findAllByOwnerIdIsOrderById(userId);
+        RequestValidator.isValidParameters(from, size);
+
+        Pageable pageable = PageRequest.of(from / size, size);
+        List<Item> listItem = repository.findAllByOwnerIdIsOrderById(userId, pageable).toList();
         log.info("Получили все вещи пользователя с id {}: {}", userId, listItem);
 
         List<ItemDto> listItemDto = ItemMapper.mapToItemDto(listItem);
@@ -69,6 +77,13 @@ public class ItemServiceImpl implements ItemService {
         ItemValidator.isValidItem(itemDto);
 
         Item item = ItemMapper.toItem(itemDto);
+
+        if (itemDto.getRequestId() != null) {
+            Optional<Request> requestOptional = requestRepository.findById(itemDto.getRequestId());
+            Request request = RequestValidator.isValidRequest(requestOptional);
+            item.setRequest(request);
+        }
+
         item.setOwner(user);
         Item newItem = repository.save(item);
         log.info("Добавлена новая item {}", newItem);
@@ -105,6 +120,13 @@ public class ItemServiceImpl implements ItemService {
             log.info("Обновление доступности на {}", item.getAvailable());
         }
 
+        if (itemDto.getRequestId() != null) {
+            Optional<Request> requestOptional = requestRepository.findById(itemDto.getRequestId());
+            Request request = RequestValidator.isValidRequest(requestOptional);
+            item.setRequest(request);
+            log.info("Обновление запроса на {}", itemDto.getRequestId());
+        }
+
         log.info("Обновляем вещь с id {}, параметры item {}", item.getId(), item);
         Item updateItem = repository.save(item);
         log.info("item обновлена {}", updateItem);
@@ -133,7 +155,7 @@ public class ItemServiceImpl implements ItemService {
 
     /*GET /items/search?text={text} - поиск вещей*/
     @Override
-    public List<ItemDto> searchItems(String text) {
+    public List<ItemDto> searchItems(String text, Integer from, Integer size) {
         log.info("Запрос на поиск вещи: {}", text);
         List<ItemDto> list = new ArrayList<>();
         if (text.isEmpty()) {
@@ -141,7 +163,10 @@ public class ItemServiceImpl implements ItemService {
             return list;
         }
 
-        List<Item> items = repository.search(text);
+        RequestValidator.isValidParameters(from, size);
+        Pageable pageable = PageRequest.of(from / size, size);
+
+        List<Item> items = repository.search(text, pageable).toList();
         return items.stream()
                 .filter(i -> i.getAvailable())
                 .map(ItemMapper::toItemDto)

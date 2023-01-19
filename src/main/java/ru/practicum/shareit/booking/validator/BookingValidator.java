@@ -43,8 +43,8 @@ public class BookingValidator {
         }
 
         if (bookingShot.getEnd().isBefore(bookingShot.getStart())) {
-            log.info("Дата окончания бронирования не может быть позже даты начала бронирования");
-            throw new InvalidParameterException("Дата окончания бронирования не может быть позже даты начала бронирования");
+            log.info("Дата окончания бронирования не может быть раньше даты начала бронирования");
+            throw new InvalidParameterException("Дата окончания бронирования не может быть раньше даты начала бронирования");
         }
     }
 
