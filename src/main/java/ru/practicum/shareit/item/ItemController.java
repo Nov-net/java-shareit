@@ -18,8 +18,10 @@ public class ItemController {
 
     /*GET /items - получение списка всех вещей*/
     @GetMapping
-    public List<ItemDto> getItemsDtoByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
-        return itemService.getItemsDtoByUserId(userId);
+    public List<ItemDto> getItemsDtoByUserId(@RequestHeader("X-Sharer-User-Id") long userId,
+                             @RequestParam(value = "from", defaultValue = "0", required = false) Integer from,
+                             @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
+        return itemService.getItemsDtoByUserId(userId, from, size);
     }
 
     /*POST /items - создание новой вещи*/
@@ -44,8 +46,10 @@ public class ItemController {
 
     /*GET /items/search?text={text} - поиск вещей*/
     @GetMapping("/search")
-    public List<ItemDto> searchItems(@RequestParam String text) {
-        return itemService.searchItems(text);
+    public List<ItemDto> searchItems(@RequestParam String text,
+                                     @RequestParam(value = "from", defaultValue = "0", required = false) Integer from,
+                                     @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
+        return itemService.searchItems(text, from, size);
     }
 
     /*POST /items/{itemId}/comment - добавление комментария*/

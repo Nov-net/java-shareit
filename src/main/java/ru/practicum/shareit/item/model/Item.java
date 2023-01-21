@@ -1,10 +1,12 @@
 package ru.practicum.shareit.item.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import ru.practicum.shareit.request.model.ItemRequest;
+import ru.practicum.shareit.request.model.Request;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "items")
@@ -12,13 +14,17 @@ import javax.persistence.*;
 @Getter @Setter @ToString
 @AllArgsConstructor @NoArgsConstructor
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column
     private String name;
+
     @Column
     private String description;
+
     @Column
     private Boolean available;
 
@@ -28,6 +34,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "request_id")
-    private ItemRequest request;
+    @JsonBackReference
+    private Request request;
 
 }

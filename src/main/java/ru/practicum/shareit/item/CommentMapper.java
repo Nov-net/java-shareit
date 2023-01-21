@@ -20,6 +20,9 @@ public class CommentMapper {
     }
 
     public static List<CommentDto> mapToCommentDto(List<Comment> comments) {
+        if (comments == null) {
+            return null;
+        }
         return comments.stream()
                 .map(CommentMapper::toCommentDto)
                 .collect(Collectors.toList());

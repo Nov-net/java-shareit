@@ -3,6 +3,8 @@ package ru.practicum.shareit.booking.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.BookingMapper;
 import ru.practicum.shareit.booking.dto.BookingDto;
@@ -16,6 +18,7 @@ import ru.practicum.shareit.exception.UnknownState;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.validator.ItemValidator;
+import ru.practicum.shareit.request.validator.RequestValidator;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.validator.UserValidator;
@@ -88,22 +91,29 @@ public class BookingServiceImpl implements BookingService {
 
     /*GET /bookings - получение бронирования по bookerId*/
     @Override
-    public List<BookingDto> getAllBookingDtoByBookerId(long userId, String state) {
+    public List<BookingDto> getAllBookingDtoByBookerId(long userId, String state, Integer from, Integer size) {
+        RequestValidator.isValidParameters(from, size);
+
         Optional<User> userOptional = userRepository.findById(userId);
         UserValidator.isValidUser(userOptional);
 
-        List<Booking> bookings = repository.findByBooker_IdAndOrderByStart_DateDesc(userId);
+        Pageable pageable = PageRequest.of(from / size, size);
+        List<Booking> bookings = repository.findByBookerId(userId, pageable).toList();
 
         return sortListBooking(state, bookings);
     }
 
     /*GET /bookings/{owner} - получение списка всех бронирований по ownerId*/
     @Override
-    public List<BookingDto> getBookingDtoByOwnerId(long userId, String state) {
+    public List<BookingDto> getBookingDtoByOwnerId(long userId, String state, Integer from, Integer size) {
+        RequestValidator.isValidParameters(from, size);
+
         Optional<User> userOptional = userRepository.findById(userId);
         UserValidator.isValidUser(userOptional);
 
-        List<Booking> bookings = repository.findByOwner_Id(userId);
+        Pageable pageable = PageRequest.of(from / size, size);
+        List<Booking> bookings = repository.findByOwner_Id(userId, pageable).toList();
+
         return sortListBooking(state, bookings);
     }
 
