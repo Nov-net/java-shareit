@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "comments")
 @Builder
-@Getter @Setter @ToString
-@AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment {
 
     @Id

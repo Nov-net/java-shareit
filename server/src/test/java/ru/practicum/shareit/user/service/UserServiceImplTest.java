@@ -10,7 +10,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
-import ru.practicum.shareit.user.validator.UserValidator;
 
 import java.util.List;
 import java.util.Optional;

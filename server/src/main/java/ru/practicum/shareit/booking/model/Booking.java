@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "bookings")
 @Builder
 @Data
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,13 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.dto.RequestDtoShot;
 import ru.practicum.shareit.request.model.Request;
-import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.validator.UserValidator;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
@@ -60,7 +57,7 @@ public class RequestValidatorJsonTest {
     }
 
     @Test
-    void UserValidatorNotFoundExceptionTest() {
+    void userValidatorNotFoundExceptionTest() {
         Optional<Request> requestOptional = Optional.ofNullable(null);
         Request request = validator.isValidRequest(requestOptional);
 

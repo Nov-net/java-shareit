@@ -42,7 +42,7 @@ public class RequestMapper {
                 .build();
     }
 
-    public static Request requestBilder (Request request) {
+    public static Request requestBilder(Request request) {
         return Request.builder()
                 .id(request.getId())
                 .description(request.getDescription())

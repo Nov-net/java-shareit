@@ -33,7 +33,7 @@ public class ItemMapper {
                 .collect(Collectors.toList());
     }
 
-    public static ItemDtoForRequest toItemDtoForRequest (Item item) {
+    public static ItemDtoForRequest toItemDtoForRequest(Item item) {
         return ItemDtoForRequest.builder()
                 .id(item.getId())
                 .name(item.getName())
@@ -62,7 +62,7 @@ public class ItemMapper {
                 .build();
     }
 
-    public static Item itemBilder (Item item) {
+    public static Item itemBilder(Item item) {
         return Item.builder()
                 .id(item.getId())
                 .name(item.getName())

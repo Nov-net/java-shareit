@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @JsonTest
@@ -68,7 +67,8 @@ public class BookingValidatorJsonTest {
     }
 
     @Test
-    void isValidBookingTest() throws Exception { List<Item> items = new ArrayList<>();
+    void isValidBookingTest() throws Exception {
+        List<Item> items = new ArrayList<>();
         LocalDateTime now = LocalDateTime.of(2023, 01, 15, 21, 07, 57);
         User user = new User(1L, "User 1", "1@ya.ru");
         Request request = new Request(1L, "Описание", items, user, now);
@@ -89,7 +89,7 @@ public class BookingValidatorJsonTest {
     }
 
     @Test
-    void UserValidatorNotFoundExceptionTest() {
+    void userValidatorNotFoundExceptionTest() {
         Optional<Booking> bookingOptional = Optional.ofNullable(null);
 
         assertThrows(NotFoundException.class, () -> validator.isValidBooking(bookingOptional));

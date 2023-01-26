@@ -54,7 +54,7 @@ public class ItemValidator {
 
     @SneakyThrows
     public static void isAvailable(Item item) {
-        if(!item.getAvailable()) {
+        if (!item.getAvailable()) {
             log.info("Вещь с id {} недоступна для бронирования, available = ", item.getId(), item.getAvailable());
             throw new InvalidParameterException("Вещь недоступна для бронирования");
         }

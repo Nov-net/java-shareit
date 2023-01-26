@@ -50,13 +50,13 @@ public class BookingServiceImpl implements BookingService {
         BookingValidator.isValidBooking(bookingShot);
 
         log.info("Получение вещи по id {}", bookingShot.getItemId());
-        Optional <Item> itemOptional = itemRepository.findById(bookingShot.getItemId());
+        Optional<Item> itemOptional = itemRepository.findById(bookingShot.getItemId());
         Item item = ItemValidator.isValidItem(itemOptional);
         log.info("Нашли и проверили вещь: {}", item);
 
         ItemValidator.isAvailable(item);
 
-        if(user.getId().equals(item.getOwner().getId())) {
+        if (user.getId().equals(item.getOwner().getId())) {
             log.info("booker_id = owner_id");
             throw new NotFoundException("Бронирование не найдено");
         }
@@ -81,7 +81,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = BookingValidator.isValidBooking(bookingOptional);
         log.info("id букера {}, id овнера {}", booking.getBooker().getId(), booking.getItem().getOwner().getId());
 
-        if(booking.getBooker().getId().equals(userId) || booking.getItem().getOwner().getId().equals(userId)) {
+        if (booking.getBooker().getId().equals(userId) || booking.getItem().getOwner().getId().equals(userId)) {
             return BookingMapper.toBookingDto(booking);
         } else {
             log.info("Бронирование другого пользователя");
@@ -129,7 +129,7 @@ public class BookingServiceImpl implements BookingService {
         Optional<Booking> bookingOptional = repository.findBookingById(bookingId);
         Booking booking = BookingValidator.isValidBooking(bookingOptional);
 
-        if(booking.getStatus().equals(Status.APPROVED)) {
+        if (booking.getStatus().equals(Status.APPROVED)) {
             log.info("Статус бронирования не может быть изменен после подтверждения");
             throw new InvalidParameterException("Статус бронирования не может быть изменен после подтверждения");
         }

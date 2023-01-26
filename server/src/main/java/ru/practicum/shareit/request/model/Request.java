@@ -12,14 +12,17 @@ import java.util.List;
 @Entity
 @Table(name = "requests")
 @Builder
-@Getter @Setter @ToString
-@AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String description;
 
     @OneToMany(mappedBy = "request")
@@ -27,7 +30,7 @@ public class Request {
     private List<Item> items;
 
     @ManyToOne
-    @JoinColumn(name = "requestor_id", nullable=false)
+    @JoinColumn(name = "requestor_id", nullable = false)
     private User requestor;
 
     @Column

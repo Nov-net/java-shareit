@@ -35,7 +35,7 @@ public class UserServiceIt {
     @AfterEach
     void after() {
         List<UserDto> list = userService.getAllUsers();
-        for(UserDto u : list) {
+        for (UserDto u : list) {
             userService.deleteUserById(u.getId());
         }
     }

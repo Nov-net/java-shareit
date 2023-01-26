@@ -14,6 +14,7 @@ import java.util.Optional;
 public class BookingValidator {
 
     static LocalDateTime now = LocalDateTime.now();
+
     @SneakyThrows
     public static void isValidBooking(BookingShot bookingShot) {
         isValidItemId(bookingShot);

@@ -99,7 +99,7 @@ public class ItemServiceImpl implements ItemService {
         User user = UserValidator.isValidUser(userOptional);
 
         log.info("Получение вещи по id {}", itemId);
-        Optional <Item> itemOptional = repository.findById(itemId);
+        Optional<Item> itemOptional = repository.findById(itemId);
         Item item = ItemValidator.isValidItem(itemOptional);
         log.info("Нашли и проверили вещь: {}", item);
 
@@ -184,7 +184,7 @@ public class ItemServiceImpl implements ItemService {
         log.info("Нашли и проверили пользователя: {}", user);
 
         log.info("Получение вещи по id {}", itemId);
-        Optional <Item> itemOptional = repository.findById(itemId);
+        Optional<Item> itemOptional = repository.findById(itemId);
         Item item = ItemValidator.isValidItem(itemOptional);
         log.info("Нашли и проверили вещь: {}", item);
 

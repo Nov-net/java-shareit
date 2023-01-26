@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
-    Request save (Request request);
+    Request save(Request request);
 
     List<Request> findAllByRequestorIdIsOrderByCreatedDesc(Long requestorId);
 

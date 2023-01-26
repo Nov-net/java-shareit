@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import org.springframework.dao.DataIntegrityViolationException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
@@ -23,7 +22,7 @@ public class UserValidatorJsonTest {
     UserValidator validator = new UserValidator();
 
     @Test
-    void UserValidatorTest() throws Exception {
+    void isValidUserTest() throws Exception {
         Optional<User> userOptional = Optional.ofNullable(new User(1L, "User 1", "1@ya.ru"));
         User user = validator.isValidUser(userOptional);
 
@@ -35,7 +34,7 @@ public class UserValidatorJsonTest {
     }
 
     @Test
-    void UserValidatorNotFoundExceptionTest() throws Exception {
+    void userNotFoundExceptionTest() throws Exception {
         Optional<User> userOptional = Optional.ofNullable(null);
 
         assertThrows(NotFoundException.class, () -> validator.isValidUser(userOptional));
